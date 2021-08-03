@@ -55,7 +55,7 @@ The configuration needed to run the numerical experiments as batch job on a clus
 			Part 2: Compute and Save Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This part pre-supposes that the res* and sim_res* for each economy created by Part 1 exist.
+This part pre-supposes that the res* and sim_res* for each economy created by Part 1 exist. NOTE: the .mat files for all economies are available as zip archive "res_sim_files.zip" with the supplemental materials via the Review of Economic Studies publication.
 
 The steps below re-create all the results used in the paper.
 	

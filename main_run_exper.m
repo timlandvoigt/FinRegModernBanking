@@ -24,6 +24,10 @@ if ~exist('localpool','var')
     % local cluster profile for parpool?
     localpool=true;
 end
+if ~exist('no_par_processes','var')
+    % local cluster profile for parpool?
+    no_par_processes=4;
+end
 
 
 open_parpool; 
