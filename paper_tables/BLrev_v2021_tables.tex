@@ -1,0 +1,419 @@
+\documentclass[letterpaper,12pt,dvipsnames,usenames]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{luainputenc}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+\usepackage{bbm}
+\usepackage{amsmath,mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathpazo}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{realboxes}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage[capposition=top]{floatrow}
+\usepackage{setspace}
+\usepackage{epstopdf}
+\usepackage[authoryear]{natbib}
+\usepackage{esint}
+\usepackage{epsfig}
+\usepackage{threeparttable}
+\usepackage{subcaption}
+\usepackage{pdflscape}
+\usepackage{afterpage} 
+\usepackage[capposition=top]{floatrow}
+\floatsetup[table]{capposition=top}
+\floatsetup[figure]{capposition=bottom}
+%\usepackage{capt-of}
+\usepackage[unicode=true,
+ bookmarks=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{claim}{Claim}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{ex}{Example}
+\newtheorem{exer}{Exercise}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{ob}{Observation}
+\newtheorem{fact}{Fact}
+\newtheorem{assm}{Assumption}
+
+\newcommand{\para}[1]{\paragraph{#1.}}
+\newcommand{\undertext}[2]{\underbrace{#1}_{\text{#2}}}
+
+%\newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\newcolumntype{L}[1]{>{\begin{varwidth}[t]{#1}}l<{\end{varwidth}}}
+\onehalfspacing
+
+\begin{document}
+
+
+\title{Financial Regulation in a Quantitative Model of the Modern Banking
+System:\\ Tables for Reproduction}
+
+ 
+\author{
+	Juliane Begenau\\
+	Stanford GSB
+	\and Tim Landvoigt\\
+	Wharton}
+
+\medskip
+\date{\today}
+
+
+\maketitle
+
+
+\thispagestyle{empty}
+
+\parskip 4pt \parindent .2in
+
+%\baselineskip20pt
+
+
+\begin{table}[!ht] 
+	\caption{Calibration}
+	{\small{}
+		\label{tab:params} }%
+	\resizebox{\textwidth}{!}{
+		\begin{threeparttable}
+			\subcaption*{ {Panel A:  Parameters with a one-to-one mapping to the data}}
+			\begin{tabular}{lllll}
+				\toprule
+				\multicolumn{2}{c}{Value  } & & Description  & Target \\
+				\midrule
+				%& \multicolumn{4}{c}{\textbf{Preferences}}    \\
+				%		$\gamma$ & 2     &   & Risk aversion & Literature (e.g., \cite{gertler2020macroeconomic})   \\
+				%	\midrule
+				& \multicolumn{4}{c}{\textbf{Production}}      \\
+				$\rho_Y$ & \param{delta_Y} &            & Non-bank GDP autocorr.  &  AC(NIPA GDP -   Bank dep. GDP) \\
+				$\sigma^Y$  & \param{sigY}\% &       & Non-bank GDP volatility   &  Vol(NIPA GDP - Bank GDP)  \\
+				$\delta_K$ & \param{deltaK}\% &  & Depreciation  &   Quarterly depreciation NIPA \\
+				$\eta$ & \param{eta}&                    & Labor share  &   NIPA labor share \\
+				$\sigma_{\rho^{C}}$ & \param{sig_rhoC}\%  &       &   SD C-bank idiosync. shocks  & vol(equity payout C-banks)\\
+				$\sigma_{\rho^{S}}$ & \param{sig_rhoS}\% &          &   SD S-bank idiosync. shocks  & vol(equity payout S-banks) \\
+				\midrule
+				& \multicolumn{4}{c}{\textbf{Bank regulation}} \\              
+				$\theta$ & \param{theta}\%   &             & Capital requirement   & mean(Tier-1 Eq /   Assets)\\
+				$\kappa$ & \param{kappaC}\% &        & Deposit insurance fee    & FDIC report  (see table notes)\\
+				\midrule
+				& \multicolumn{4}{c}{\textbf{Runs }}             \\
+				$\underline{Z} $ & $\param{Zbar_disc}\% \times Z$ &       & Real asset foreclosure discount &  \citet{campbell2011forced}   \\
+				$\pi^R$ & [\param{varrho_val}[1], \param{varrho_val}[2]]     &    & Fraction of households run &  \cite{covitz2013evolution}    \\
+				Prob$_{\pi^R}$ & $\begin{bmatrix}
+					\param{varrhoprob}[1] & \param{varrhoprob}[3]\\
+					\param{varrhoprob}[2] & \param{varrhoprob}[4]
+				\end{bmatrix}$ &  & $\begin{matrix*}[l]
+					\text{Unconditional run probability} \\
+					\text{Average bank run length}
+				\end{matrix*}$   &  $\begin{matrix*}[l]
+					4.76\% \\
+					1.3 \text{ quarters}
+				\end{matrix*}$          \\ 
+				\bottomrule
+			\end{tabular}
+			\subcaption*{ {Panel B:  Parameters that  jointly match moments in the data}}
+			\begin{tabular}{lllllrr}
+				\toprule
+				\multicolumn{2}{c}{Values } & & Description   & Target & Data  & Model \\
+				\multicolumn{7}{c}{\textbf{Bank technology}} \\              
+				$\nu^Z$   & 0.23 &   &  Scales bank output  & Real GDP per capita  share &  22.3\% &  \simres{FinShare}[mean][][base][1]\%  \\
+				$\sigma^Z$  & \param{sigZ}\% &       & Bank dep. output volatility  & Vol(Bank output growth)  & 2.93\% & \simres{gYB}[std][][base][2]\% \\ 
+				$\phi_I$ & \param{phi}   &          & Investment adj. cost & Vol(Investment) & 2.65\% & \simres{I}[std][][base][2]\% \\ 
+				$\phi_K$ & \param{phiK}      &      & Capital growth adj. cost & Vol(C-bank asset growth) & 0.50\% & \simres{kC}[std][][base][2]\% \\ 
+				\midrule
+				\multicolumn{7}{c}{\textbf{Bank default}} \\                  
+				$\delta_S$ & \param{deltaS}   &    &  Default penality S-banks &  S-bank bond default & 0.28\% & \simres{FS}[mean][][base][2]\%  \\
+				&  &    & &   bond default rate &   & \\
+				$\delta_C$ & \param{deltaC}   &    &  Default penality C-banks  & Loan net charge-offs & 0.23\% &\simres{FC}[mean][][base][2]\% \\
+				$\xi_S$   & \param{xiS}\%   &     & Bankruptcy cost S-banks  & Unsecured debt recov. Moody's & 38.1\%  & \simres{recS}[mean][][base][1]\% \\
+				$\xi_C$   & \param{xiC}\%    &    & Bankruptcy cost C-banks & Sec. debt recov. \& FDIC resol. costs & 48.1\%  & \simres{recC}[mean][][base][1]\% \\
+				$\pi_B$   & \param{piB}\%      &  & Bailout probability    & Shadow bank leverage & 87.0\%  & \simres{Slev}[mean][][base][1]\% \\ \midrule
+				\multicolumn{7}{c}{\textbf{Liquidity preferences}} \\                  
+				$\beta$  & \param{beta}    &    & Discount rate &  C-bank interest rate on deposits & 0.36\%  & \simres{rateC}[mean][][base][2]\% \\   
+				$\alpha$ & \param{alpha}     &    & CES weight S-bank debt & S-bank share \citet*{gallin2013shadow} & 34.0\%  & \simres{KSsh}[mean][][base][1]\% \\    
+				$\psi$     & \param{psi}   &   & Liq. preference  weight  & Liq. premium BDG2019 & 0.21\% & \simres{liqbenC}[mean][][base][2]\% \\   
+				$\gamma_{H}$ &\param{gammaH}&   & Liq. preference curvature & Reg. coefficient on AS & -0.19\% & \simres{AScoeff}[mean][][base][2]\%\\ 
+				$\epsilon$ & \param{epsilon}  &       & Liq. type elasticity & Reg. coefficient on AC & 0.50\% & \simres{ACcoeff}[mean][][base][2]\%\\ 
+				\midrule
+				\multicolumn{7}{c}{\textbf{Run}} \\      
+				$\underline{\delta}_K $ & \param{deltaK}\%   &       & capital dep.   & Avg. haircut \citet*{gorton2009haircuts}                        & 15.1\% &$ 15.2\% $\\
+				\bottomrule
+			\end{tabular}
+			\begin{tablenotes}[flushleft]
+				\footnotesize
+				\item %Notes: This table lists the parameters of our model. See discussion in Section \ref{subsec:calibration} on data counterparts of model variables and liquidity demand parameters. All other parameters are discussed in Appendix \ref{app:calibother}.  The data sources for this table are from NIPA, Flow of Funds, FRED (\url{https://fred.stlouisfed.org/}), Compustat/CRSP and the FR-Y-9C. Sample period is from 1999Q1 to 2019Q4. The link to the FDIC report is \url{https://www.fdic.gov/about/strategic/report/2016annualreport/ar16section3.pdf}. The volatility of equity payout is the time series average from Compustat/CRSP of the cross-sectional volatility of equity payout (dividend + net repurchases) per share for commercial banks and shadow banks (see appendix  for definition using SIC codes).  Using the same definition and data source, shadow bank leverage is the value weighted debt to asset ratio.  BDG2019 stands for \cite*{van2019risk}. 
+			\end{tablenotes} 
+	\end{threeparttable}}
+\end{table} 
+
+\clearpage 
+\newpage
+
+\begin{table}[!ht] 
+\caption{Commercial $-$ Shadow bank debt price spread regressions}
+\centering{}{\small{} }%
+
+\begin{tabular}{lccc}
+\toprule
+   & (1)  & & (2) \\    
+ \midrule 
+log(S-bank debt/GDP)  & -0.19\%  & & -0.14\%        \\    
+                                           & (-1.86)    &  & (-1.13)  \\
+log(C-bank debt/GDP)   &  0.50\% &  & 0.44\%  \\                
+									       & (1.64)     & & (1.45)     \\
+Federal Funds Rate          & 54.89\%  & &  54.61\%  \\         
+										   & (10.02)   &  & (10.66)    \\         
+log(C/GDP)                       & 0.57\%    & &  -0.24\%   \\                  
+   									      & (0.26)    & &   (-0.11) \\        
+ VIX                                     &            &   &  -0.12\%  \\                 
+                                            &            &   &   (-1.39)   \\                 
+ \midrule 
+adj. R2                                 &  0.77  &   & 0.78         \\      
+\bottomrule
+
+\end{tabular}
+\label{tab:cal_gameps}
+%\floatfoot{Notes: The sample is 1999Q1 -- 2019Q4. The dependent variable is the quarterly spread between the price on commercial bank debt, defined as the inverse of the interest rate paid on deposits, and the price on shadow bank debt, defined as the 3-month  AA-financial commercial paper price. The interest rate paid on deposits is calculated as the aggregate amount of interest rate expense on deposits divided by the aggregate amount of deposits. The data comes from FR-Y-9C reports (bank holding companies). We download the 3-month AA-financial commercial paper rate from FRED (i.e., Federal Reserve Economic Data maintained by the Federal Reserve bank of St. Louis). We download the Fed Funds rate from FRED. Shadow bank debt is the sum of REPO claims held by shadow banks (Flow of Funds table L.207), total money market mutual fund assets (equals liabilities) (table L.206), and commercial paper held by the domestic financial sector less depository institutions (table L.209). Commercial bank debt is set to aggregate bank deposits (FR-Y-9C). We download the real consumption series from FRED. All quantities are normalized by GDP and logged. The VIX is the daily CBOE Volatility Index downloaded from FRED, converted into a quarterly average.   We use the HAC estimator to compute  heteroscedasticity and autocorrelation consistent standard errors. We report the resulting t-statistics in brackets. Both regressions include a constant term. }
+ \end{table}
+
+
+\clearpage 
+\newpage
+ \begin{table}[h]
+  \centering
+   \caption{Properties of the dynamic model}
+        \begin{tabular}{lrrr}
+  \toprule
+                               & & Data  & Model \\  
+                                    \midrule
+          \multicolumn{4}{c}{\textbf{Volatility}} \\
+          Consumption  & &  0.38\% &\simres{logC}[std][][base][2]\%     \\
+        Mkt    Lev C          &  &1.48\% &\simres{Clev}[std][][base][2]\%  \\
+     Book     Lev C          &  &0.29\% &\simres{Clevbk}[std][][base][2]\%  \\
+         Mkt    Lev S           &  &2.22\% & \simres{Slev}[std][][base][2]\%   \\
+        Book    Lev S           &  &3.41\% & \simres{Slevbk}[std][][base][2]\%   \\
+     Debt C/Debt S      &  & 0.52 & \simres{ACAS}[std][][base][2]   \\
+  \midrule
+           \multicolumn{4}{c}{\textbf{Business Cycle Correlation}} \\ 
+   Consumption      & & 0.89 & \simres{logC}[corrGDP][][base][2]    \\
+       Investment      & & 0.92 & \simres{I}[corrGDP][][base][2]    \\
+   Debt S Share        &  &0.43 & \simres{ASsh}[corrGDP][][base][2]  \\
+   Debt S (lag GDP)  &  &0.26 & \simres{ASsh}[corrGDP_1][][base][2]  \\ \\
+   Book Lev C     &  & 0.16 &\simres{Clevbk}[corrGDP][][base][2]  \\
+   Mkt    Lev C     &  & -0.21 &\simres{Clev}[corrGDP][][base][2]  \\
+   Book Lev S      &  &  0.04 & \simres{Slevbk}[corrGDP][][base][2]   \\
+   Mkt    Lev S     &  & -0.31 & \simres{Slev}[corrGDP][][base][2]   \\
+ \\
+   C-bank liquidity  benefit &  & -0.26 & \simres{liqbenC}[corrGDP][][base][2]  \\
+   yield C             &  & 0.74 &\simres{rateC}[corrGDP][][base][2]  \\
+   yield S             &  & 0.82 & \simres{rateS}[corrGDP][][base][2]   \\
+   rf. rate             &  & 0.70 &\simres{rf}[corrGDP][][base][2]  \\
+   spread S-C     & & 0.51 &  \simres{ratespr}[corrGDP][][base][2]   \\
+        \bottomrule
+     \end{tabular}
+    \label{tab:bcprop}
+%    \floatfoot*{This table presents untargeted moments in the model and compares them to their data counterpart. The sample for the data is 1999 Q1 to 2019 Q4. The volatility is the standard deviation of the HP-filtered variable. The GDP  correlation is the correlation of HP-filtered business cycle component of GDP with the HP-filtered business cycle component of the variable of interest. See Appendix \ref{app_sec_modelfit}  for the description of the data. }
+ \end{table} 
+
+
+\clearpage 
+\newpage
+
+\afterpage{%
+	\clearpage% Flush earlier floats (otherwise order might not be correct)
+	\thispagestyle{plain}% 
+	\begin{landscape}% Landscape page
+		\centering % Center table
+		\begin{table}
+		\captionof{table}{Effect of higher capital requirements}% Add 'table' caption		
+		{\small
+			\begin{tabular}{lr|rrrrrrr}
+				\toprule
+				& \multicolumn{1}{c|}{\textbf{Base}} & \multicolumn{1}{c}{\textbf{13\%}} & \multicolumn{1}{c}{\textbf{14\%}} & \multicolumn{1}{c}{\textbf{15\%}} & \multicolumn{1}{c}{\textbf{16\%}} & \multicolumn{1}{c}{\textbf{17\%}} & \multicolumn{1}{c}{\textbf{20\%}} & \multicolumn{1}{c}{\textbf{30\%}}   \\  \midrule 
+				& \multicolumn{6}{c}{\textbf{Capital and Debt}}   \\  \midrule 
+				1. Capital & \simres{K}[mean][][base][2] & \compres{K}[mean][][theta13][2]\% & \compres{K}[mean][][theta14][2]\% & \compres{K}[mean][][theta15][2]\% & \compres{K}[mean][][theta16][2]\% & \compres{K}[mean][][theta17][2]\% & \compres{K}[mean][][theta20][2]\%  & \compres{K}[mean][][theta30][2]\%  \\
+				2. Debt share S & \simres{BSsh}[mean][][base][2]\% &  \compres{BSsh}[mean][][theta13][2]\% & \compres{BSsh}[mean][][theta14][2]\% & \compres{BSsh}[mean][][theta15][2]\% & \compres{BSsh}[mean][][theta16][2]\% & \compres{BSsh}[mean][][theta17][2]\% & \compres{BSsh}[mean][][theta20][2]\%  & \compres{BSsh}[mean][][theta30][2]\%   \\
+				3. Capital share S & \simres{KSsh}[mean][][base][2]\% & \compres{KSsh}[mean][][theta13][2]\% &  \compres{KSsh}[mean][][theta14][2]\% & \compres{KSsh}[mean][][theta15][2]\% &  \compres{KSsh}[mean][][theta16][2]\% & \compres{KSsh}[mean][][theta17][2]\% & \compres{KSsh}[mean][][theta20][2]\% & \compres{KSsh}[mean][][theta30][2]\%   \\
+				4. Capital S & \simres{KS}[mean][][base][2] & \compres{KS}[mean][][theta13][2]\% &  \compres{KS}[mean][][theta14][2]\% & \compres{KS}[mean][][theta15][2]\% &  \compres{KS}[mean][][theta16][2]\% & \compres{KS}[mean][][theta17][2]\% & \compres{KS}[mean][][theta20][2]\% &  \compres{KS}[mean][][theta30][2]\%   \\
+				5. Leverage S & \simres{Slev}[mean][][base][2]\% & \compres{Slev}[mean][][theta13][2]\% & \compres{Slev}[mean][][theta14][2]\% & \compres{Slev}[mean][][theta15][2]\% & \compres{Slev}[mean][][theta16][2]\% & \compres{Slev}[mean][][theta17][2]\% & \compres{Slev}[mean][][theta20][2]\%  & \compres{Slev}[mean][][theta30][2]\%   \\
+				6. Leverage C & \simres{Clev}[mean][][base][2]\% & \compres{Clev}[mean][][theta13][2]\% &  \compres{Clev}[mean][][theta14][2]\% & \compres{Clev}[mean][][theta15][2]\% & \compres{Clev}[mean][][theta16][2]\% & \compres{Clev}[mean][][theta17][2]\% & \compres{Clev}[mean][][theta20][2]\%  & \compres{Clev}[mean][][theta30][2]\%  \\
+				7. Early Liquidation (runs) & \simres{lS}[mean][][base][2] & \compres{lS}[mean][][theta13][2]\% & \compres{lS}[mean][][theta14][2]\% & \compres{lS}[mean][][theta15][2]\% & \compres{lS}[mean][][theta16][2]\% & \compres{lS}[mean][][theta17][2]\% & \compres{lS}[mean][][theta20][2]\%  & \compres{lS}[mean][][theta30][2]\%  \\  \midrule
+				& \multicolumn{6}{c}{\textbf{Prices}}              \\  \midrule
+				8. Deposit rate S & \simres{rateS}[mean][][base][2] \% &  \compres{rateS}[mean][][theta13][2]\% & \compres{rateS}[mean][][theta14][2]\% & \compres{rateS}[mean][][theta15][2]\% & \compres{rateS}[mean][][theta16][2]\% & \compres{rateS}[mean][][theta17][2]\% & \compres{rateS}[mean][][theta20][2]\% &  \compres{rateS}[mean][][theta30][2]\% \\
+				9. Deposit rate C &  \simres{rateC}[mean][][base][2]\% &  \compres{rateC}[mean][][theta13][2]\% & \compres{rateC}[mean][][theta14][2]\% & \compres{rateC}[mean][][theta15][2]\% & \compres{rateC}[mean][][theta16][2]\% & \compres{rateC}[mean][][theta17][2]\% & \compres{rateC}[mean][][theta20][2]\% &  \compres{rateC}[mean][][theta30][2]\%   \\
+				10. Convenience Yield S & \simres{MRS_S}[mean][][base][2]\% &  \compres{MRS_S}[mean][][theta13][2]\% & \compres{MRS_S}[mean][][theta14][2]\% & \compres{MRS_S}[mean][][theta15][2]\% & \compres{MRS_S}[mean][][theta16][2]\% & \compres{MRS_S}[mean][][theta17][2]\% & \compres{MRS_S}[mean][][theta20][2]\% &  \compres{MRS_S}[mean][][theta30][2]\%    \\
+				11. Convenience Yield C & \simres{MRS_C}[mean][][base][2]\% &  \compres{MRS_C}[mean][][theta13][2]\% & \compres{MRS_C}[mean][][theta14][2]\% & \compres{MRS_C}[mean][][theta15][2]\% & \compres{MRS_C}[mean][][theta16][2]\% & \compres{MRS_C}[mean][][theta17][2]\% & \compres{MRS_C}[mean][][theta20][2]\% &  \compres{MRS_C}[mean][][theta30][2]\%  \\   \midrule 
+				& \multicolumn{6}{c}{\textbf{Welfare}}            \\  \midrule
+				12. Default S & \simres{FS}[mean][][base][2]\% &  \compres{FS}[mean][][theta13][2]\% & \compres{FS}[mean][][theta14][2]\% & \compres{FS}[mean][][theta15][2]\% & \compres{FS}[mean][][theta16][2]\% & \compres{FS}[mean][][theta17][2]\% & \compres{FS}[mean][][theta20][2]\%  & \compres{FS}[mean][][theta30][2]\%  \\
+				13. Default C & \simres{FC}[mean][][base][2]\%  &  \compres{FC}[mean][][theta13][2]\% &  \compres{FC}[mean][][theta14][2]\% &\compres{FC}[mean][][theta15][2]\% & \compres{FC}[mean][][theta16][2]\% & \compres{FC}[mean][][theta17][2]\% & \compres{FC}[mean][][theta20][2]\% & \compres{FC}[mean][][theta30][2]\%  \\
+				14. GDP & \simres{GDP}[mean][][base][2] & \compres{GDP}[mean][][theta13][2]\% & \compres{GDP}[mean][][theta14][2]\% & \compres{GDP}[mean][][theta15][2]\% & \compres{GDP}[mean][][theta16][2]\% & \compres{GDP}[mean][][theta17][2]\% & \compres{GDP}[mean][][theta20][2]\%  & \compres{GDP}[mean][][theta30][2]\%   \\
+				15. Liquidity Services & \simres{H}[mean][][base][2]  & \compres{H}[mean][][theta13][2]\% & \compres{H}[mean][][theta14][2]\% & \compres{H}[mean][][theta15][2]\% & \compres{H}[mean][][theta16][2]\% & \compres{H}[mean][][theta17][2]\% & \compres{H}[mean][][theta20][2]\%  & \compres{H}[mean][][theta30][2]\%  \\
+				16. Consumption & \simres{C}[mean][][base][2]  & \compres{C}[mean][][theta13][3]\% & \compres{C}[mean][][theta14][3]\% & \compres{C}[mean][][theta15][3]\% & \compres{C}[mean][][theta16][3]\% & \compres{C}[mean][][theta17][3]\% & \compres{C}[mean][][theta20][3]\% & \compres{C}[mean][][theta30][3]\%  \\
+				17. Vol(Liquidity Services) & \simres{H}[std][][base][2]  & \compres{H}[std][][theta13][2]\% & \compres{H}[std][][theta14][2]\% & \compres{H}[std][][theta15][2]\% & \compres{H}[std][][theta16][2]\% & \compres{H}[std][][theta17][2]\% & \compres{H}[std][][theta20][2]\%  & \compres{H}[std][][theta30][2]\%  \\
+				18. Vol(Consumption) & \simres{C}[std][][base][2] & \compres{C}[std][][theta13][2]\% &  \compres{C}[std][][theta14][2]\% & \compres{C}[std][][theta15][2]\% &  \compres{C}[std][][theta16][2]\% & \compres{C}[std][][theta17][2]\% & \compres{C}[std][][theta20][2]\%  & \compres{C}[std][][theta30][2]\%  \\
+				19. Welfare &   & \compres{VHcons}[mean][][theta13][4]\% & \compres{VHcons}[mean][][theta14][4]\% & \compres{VHcons}[mean][][theta15][4]\% & \compres{VHcons}[mean][][theta16][4]\% & \compres{VHcons}[mean][][theta17][4]\% & \compres{VHcons}[mean][][theta20][4]\% & \compres{VHcons}[mean][][theta30][4]\%  \\
+				\bottomrule
+			\end{tabular}%
+		\label{tab:mainex}
+%		\floatfoot*{This tables shows the moments of the simulated model for different values of C-banks' capital requirement $\theta$. The  ``Benchmark'' titled column shows the moments for the benchmark calibration. All other columns show the percentage change relative to the benchmark moment. }
+		}
+		\end{table}
+	\end{landscape}
+	\clearpage% Flush page
+}
+
+
+\clearpage 
+\newpage
+
+\afterpage{%
+	\clearpage% Flush earlier floats (otherwise order might not be correct)
+	\thispagestyle{plain}% 
+	\begin{landscape}% Landscape page
+		\centering % Center table
+				\begin{table}
+		\captionof{table}{Higher capital requirements without demand effect ($\gamma_{H}=0$)}% Add 'table' caption		
+		{\footnotesize
+			\begin{tabular}{l|rrrr|rrrr|rrrr}
+				\toprule
+				& \multicolumn{4}{c|}{\textbf{(1) C-bank Only}} & \multicolumn{4}{c|}{\textbf{(2) Simple Model}} & \multicolumn{4}{c}{\textbf{(3) No Demand Effect}}\\ \midrule
+				& \multicolumn{1}{c}{\textbf{B}} & \multicolumn{1}{c}{\textbf{14}} & \multicolumn{1}{c}{\textbf{15}} &  \multicolumn{1}{c|}{\textbf{16\%}} & \multicolumn{1}{c}{\textbf{B}} & \multicolumn{1}{c}{\textbf{14}} & \multicolumn{1}{c}{\textbf{15}} &  \multicolumn{1}{c|}{\textbf{16\%}} & \multicolumn{1}{c}{\textbf{B}} & \multicolumn{1}{c}{\textbf{14}} & \multicolumn{1}{c}{\textbf{15}} &  \multicolumn{1}{c}{\textbf{16\%}}\\  \midrule
+				& \multicolumn{12}{c}{\textbf{Capital and Debt}}   \\  \midrule
+				1. Capital & \simres{K}[mean][][baseC][2] & \compres{K}[mean][][theta14C][2]\% & \compres{K}[mean][][theta15C][2]\% & \compres{K}[mean][][theta16C][2]\% &  \simres{K}[mean][][basesimpleCgH0][2] & \compres{K}[mean][][theta14simpleCgH0][2]\% & \compres{K}[mean][][theta15simpleCgH0][2]\% & \compres{K}[mean][][theta16simpleCgH0][2]\% &  \simres{K}[mean][][basegH0][2] & \compres{K}[mean][][theta14gH0][2]\% & \compres{K}[mean][][theta15gH0][2]\% & \compres{K}[mean][][theta16gH0][2]\%\\
+				2. Debt share S &  - & - & - & - &  \simres{BSsh}[mean][][basesimpleCgH0][2]\% & \compres{BSsh}[mean][][theta14simpleCgH0][2]\% & \compres{BSsh}[mean][][theta15simpleCgH0][2]\% &  \compres{BSsh}[mean][][theta16simpleCgH0][2]\% &  \simres{BSsh}[mean][][basegH0][2]\% & \compres{BSsh}[mean][][theta14gH0][2]\% & \compres{BSsh}[mean][][theta15gH0][2]\% &  \compres{BSsh}[mean][][theta16gH0][2]\% \\
+				3. Capital share S & - & - & - & -   &  \simres{KSsh}[mean][][basesimpleCgH0][2]\% & \compres{KSsh}[mean][][theta14simpleCgH0][2]\% & \compres{KSsh}[mean][][theta15simpleCgH0][2]\% &  \compres{KSsh}[mean][][theta16simpleCgH0][2]\% & \simres{KSsh}[mean][][basegH0][2]\% & \compres{KSsh}[mean][][theta14gH0][2]\% & \compres{KSsh}[mean][][theta15gH0][2]\% &  \compres{KSsh}[mean][][theta16gH0][2]\%\\
+				4. Leverage S & - & - & - & -   &  \simres{Slev}[mean][][basesimpleCgH0][2]\% & \compres{Slev}[mean][][theta14simpleCgH0][2]\% & \compres{Slev}[mean][][theta15simpleCgH0][2]\% &  \compres{Slev}[mean][][theta16simpleCgH0][2]\% &   \simres{Slev}[mean][][basegH0][2]\% & \compres{Slev}[mean][][theta14gH0][2]\% & \compres{Slev}[mean][][theta15gH0][2]\% &  \compres{Slev}[mean][][theta16gH0][2]\%\\
+				5. Leverage C &  \simres{Clev}[mean][][baseC][2]\% & \compres{Clev}[mean][][theta14C][2]\% & \compres{Clev}[mean][][theta15C][2]\% &  \compres{Clev}[mean][][theta16C][2]\% &  \simres{Clev}[mean][][basesimpleCgH0][2]\% & \compres{Clev}[mean][][theta14simpleCgH0][2]\% & \compres{Clev}[mean][][theta15simpleCgH0][2]\% & \compres{Clev}[mean][][theta16simpleCgH0][2]\% &  \simres{Clev}[mean][][basegH0][2]\% & \compres{Clev}[mean][][theta14gH0][2]\% & \compres{Clev}[mean][][theta15gH0][2]\% & \compres{Clev}[mean][][theta16gH0][2]\% \\
+				6. Early Liquidation (runs) & - & - & - &  - &  - & - & - &  - & \simres{lS}[mean][][basegH0][2] & \compres{lS}[mean][][theta14gH0][2]\% & \compres{lS}[mean][][theta15gH0][2]\% &  \compres{lS}[mean][][theta16gH0][2]\%\\  \midrule
+				& \multicolumn{12}{c}{\textbf{Prices}}              \\  \midrule 
+				7. Deposit rate S & - & - & - & -   &  \simres{rateS}[mean][][basesimpleCgH0][2]\% & \compres{rateS}[mean][][theta14simpleCgH0][2]\% & \compres{rateS}[mean][][theta15simpleCgH0][2]\% &  \compres{rateS}[mean][][theta16simpleCgH0][2]\% & \simres{rateS}[mean][][basegH0][2]\% & \compres{rateS}[mean][][theta14gH0][2]\% & \compres{rateS}[mean][][theta15gH0][2]\% &  \compres{rateS}[mean][][theta16gH0][2]\%\\
+				8. Deposit rate C &  \simres{rateC}[mean][][baseC][2]\% & \compres{rateC}[mean][][theta14C][2]\% & \compres{rateC}[mean][][theta15C][2]\% &  \compres{rateC}[mean][][theta16C][2]\% &  \simres{rateC}[mean][][basesimpleCgH0][2]\% & \compres{rateC}[mean][][theta14simpleCgH0][2]\% & \compres{rateC}[mean][][theta15simpleCgH0][2]\% & \compres{rateC}[mean][][theta16simpleCgH0][2]\% &  \simres{rateC}[mean][][basegH0][2]\% & \compres{rateC}[mean][][theta14gH0][2]\% & \compres{rateC}[mean][][theta15gH0][2]\% & \compres{rateC}[mean][][theta16gH0][2]\%   \\
+				9. Convenience Yield S & - & - & - & -   &  \simres{MRS_S}[mean][][basesimpleCgH0][2]\% & \compres{MRS_S}[mean][][theta14simpleCgH0][2]\% & \compres{MRS_S}[mean][][theta15simpleCgH0][2]\% &  \compres{MRS_S}[mean][][theta16simpleCgH0][2]\% &  \simres{MRS_S}[mean][][basegH0][2]\% & \compres{MRS_S}[mean][][theta14gH0][2]\% & \compres{MRS_S}[mean][][theta15gH0][2]\% &  \compres{MRS_S}[mean][][theta16gH0][2]\%\\
+				10. Convenience Yield C & \simres{MRS_C}[mean][][baseC][2]\% & \compres{MRS_C}[mean][][theta14C][2]\% & \compres{MRS_C}[mean][][theta15C][2]\% &  \compres{MRS_C}[mean][][theta16C][2]\% &  \simres{MRS_C}[mean][][basesimpleCgH0][2]\% & \compres{MRS_C}[mean][][theta14simpleCgH0][2]\% & \compres{MRS_C}[mean][][theta15simpleCgH0][2]\% & \compres{MRS_C}[mean][][theta16simpleCgH0][2]\% &  \simres{MRS_C}[mean][][basegH0][2]\% & \compres{MRS_C}[mean][][theta14gH0][2]\% & \compres{MRS_C}[mean][][theta15gH0][2]\% & \compres{MRS_C}[mean][][theta16gH0][2]\% \\ \midrule 
+				& \multicolumn{12}{c}{\textbf{Welfare}}            \\  \midrule 
+				11. Default S &  - & - & - & -  &  \simres{FS}[mean][][basesimpleCgH0][2]\% & \compres{FS}[mean][][theta14simpleCgH0][2]\% & \compres{FS}[mean][][theta15simpleCgH0][2]\% &  \compres{FS}[mean][][theta16simpleCgH0][2]\% & \simres{FS}[mean][][basegH0][2]\% & \compres{FS}[mean][][theta14gH0][2]\% & \compres{FS}[mean][][theta15gH0][2]\% &  \compres{FS}[mean][][theta16gH0][2]\%\\  
+				12. Default C &  \simres{FC}[mean][][baseC][2]\% & \compres{FC}[mean][][theta14C][2]\% & \compres{FC}[mean][][theta15C][2]\% &  \compres{FC}[mean][][theta16C][2]\% &  \simres{FC}[mean][][basesimpleCgH0][2]\% & \compres{FC}[mean][][theta14simpleCgH0][2]\% & \compres{FC}[mean][][theta15simpleCgH0][2]\% & \compres{FC}[mean][][theta16simpleCgH0][2]\% &  \simres{FC}[mean][][basegH0][2]\% & \compres{FC}[mean][][theta14gH0][2]\% & \compres{FC}[mean][][theta15gH0][2]\% & \compres{FC}[mean][][theta16gH0][2]\% \\ 
+				13. GDP &  \simres{GDP}[mean][][baseC][2] & \compres{GDP}[mean][][theta14C][2]\% & \compres{GDP}[mean][][theta15C][2]\% &  \compres{GDP}[mean][][theta16C][2]\% &  \simres{GDP}[mean][][basesimpleCgH0][2] & \compres{GDP}[mean][][theta14simpleCgH0][2]\% & \compres{GDP}[mean][][theta15simpleCgH0][2]\% & \compres{GDP}[mean][][theta16simpleCgH0][2]\% &  \simres{GDP}[mean][][basegH0][2] & \compres{GDP}[mean][][theta14gH0][2]\% & \compres{GDP}[mean][][theta15gH0][2]\% & \compres{GDP}[mean][][theta16gH0][2]\% \\
+				14. Liquidity Services &  \simres{H}[mean][][baseC][2] & \compres{H}[mean][][theta14C][2]\% & \compres{H}[mean][][theta15C][2]\% &  \compres{H}[mean][][theta16C][2]\% &  \simres{H}[mean][][basesimpleCgH0][2] & \compres{H}[mean][][theta14simpleCgH0][2]\% & \compres{H}[mean][][theta15simpleCgH0][2]\% & \compres{H}[mean][][theta16simpleCgH0][2]\% &  \simres{H}[mean][][basegH0][2] & \compres{H}[mean][][theta14gH0][2]\% & \compres{H}[mean][][theta15gH0][2]\% & \compres{H}[mean][][theta16gH0][2]\% \\
+				15. Consumption & \simres{C}[mean][][baseC][2] & \compres{C}[mean][][theta14C][2]\% & \compres{C}[mean][][theta15C][2]\% &  \compres{C}[mean][][theta16C][2]\% &  \simres{C}[mean][][basesimpleCgH0][2] & \compres{C}[mean][][theta14simpleCgH0][2]\% & \compres{C}[mean][][theta15simpleCgH0][2]\% & \compres{C}[mean][][theta16simpleCgH0][2]\% &  \simres{C}[mean][][basegH0][2] & \compres{C}[mean][][theta14gH0][2]\% & \compres{C}[mean][][theta15gH0][2]\% & \compres{C}[mean][][theta16gH0][2]\% \\  
+				16. Vol(Liquidity Services) &  \simres{H}[std][][baseC][2] & \compres{H}[std][][theta14C][2]\% & \compres{H}[std][][theta15C][2]\% &  \compres{H}[std][][theta16C][2]\% &  \simres{H}[std][][basesimpleCgH0][2] & \compres{H}[std][][theta14simpleCgH0][2]\% & \compres{H}[std][][theta15simpleCgH0][2]\% & \compres{H}[std][][theta16simpleCgH0][2]\% &  \simres{H}[std][][basegH0][2] & \compres{H}[std][][theta14gH0][2]\% & \compres{H}[std][][theta15gH0][2]\% & \compres{H}[std][][theta16gH0][2]\% \\
+				17. Vol(Consumption) & \simres{C}[std][][baseC][2] & \compres{C}[std][][theta14C][2]\% & \compres{C}[std][][theta15C][2]\% &  \compres{C}[std][][theta16C][2]\% &  \simres{C}[std][][basesimpleCgH0][2] & \compres{C}[std][][theta14simpleCgH0][2]\% & \compres{C}[std][][theta15simpleCgH0][2]\% & \compres{C}[std][][theta16simpleCgH0][2]\% &  \simres{C}[std][][basegH0][2] & \compres{C}[std][][theta14gH0][2]\% & \compres{C}[std][][theta15gH0][2]\% & \compres{C}[std][][theta16gH0][2]\%  \\
+				18. Welfare & & \compres{VHcons}[mean][][theta14C][3]\% & \compres{VHcons}[mean][][theta15C][3]\% &  \compres{VHcons}[mean][][theta16C][3]\% &   & \compres{VHcons}[mean][][theta14simpleCgH0][3]\% & \compres{VHcons}[mean][][theta15simpleCgH0][3]\% & \compres{VHcons}[mean][][theta16simpleCgH0][3]\% &   & \compres{VHcons}[mean][][theta14gH0][3]\% & \compres{VHcons}[mean][][theta15gH0][3]\% & \compres{VHcons}[mean][][theta16gH0][3]\%  \\
+				\bottomrule
+			\end{tabular}%
+		\label{tab:simplemodels}
+}	
+%\floatfoot*{This tables presents moments of the simulated model for different model versions and different values of C-banks' capital requirements $\theta$. All cases are calculated for $\gamma_H=0$, which means that there is no demand effect.  }
+		\end{table}
+	\end{landscape}
+}
+
+\clearpage 
+\newpage
+
+
+
+
+
+\afterpage{%
+	\clearpage% Flush earlier floats (otherwise order might not be correct)
+	\thispagestyle{plain}% 
+	\begin{landscape}% Landscape page
+		\centering % Center table 
+		\begin{table}
+			\captionof{table}{Parameter Sensitivity Checks}% Add 'table' caption		
+			{\footnotesize
+				\begin{tabular}{l|rr|rr|rr|rr|rrH}
+					\toprule
+					& \multicolumn{2}{c|}{\textbf{(1) $\psi$}} & \multicolumn{2}{c|}{\textbf{(2) $\alpha$}} & \multicolumn{2}{c|}{\textbf{(3) $\varepsilon$}}  & \multicolumn{2}{c|}{\textbf{(4) $\sigma_{\rho^S}$}} & \multicolumn{2}{c}{\textbf{(5) $\pi^B$}} &  \\ \midrule
+					& \multicolumn{1}{c}{\textbf{$-25\%$}} & \multicolumn{1}{c|}{\textbf{$+25\%$}} & \multicolumn{1}{c}{\textbf{$-25\%$}} & \multicolumn{1}{c|}{\textbf{$+25\%$}} & \multicolumn{1}{c}{\textbf{$-25\%$}} & \multicolumn{1}{c|}{\textbf{$+25\%$}} &  \multicolumn{1}{c}{\textbf{$-5\%$}} & \multicolumn{1}{c|}{\textbf{$+5\%$}} & \multicolumn{1}{c}{\textbf{$ =0$}} &   \multicolumn{1}{c}{\textbf{$ =.865$}} &  \\  \midrule
+					& \multicolumn{11}{c}{\textbf{Capital and Debt}}   \\  \midrule
+				1. Capital & \compres{K}[mean][][sscpsidn][2] & \compres{K}[mean][][sscpsiup][2]  & \compres{K}[mean][][sscalphadn][2]  & \compres{K}[mean][][sscalphaup][2]  & \compres{K}[mean][][sscepsilondn][2]  & \compres{K}[mean][][sscepsilonup][2]  & \compres{K}[mean][][sscsigrhoSdn][2]  & \compres{K}[mean][][sscsigrhoSup][2] &  \compres{K}[mean][][piBdn][2]   & \compres{K}[mean][][piBup][2]   & \compres{K}[mean][][nu10][2]   \\
+2. Debt share S & \compres{BSsh}[mean][][sscpsidn][2]  &  \compres{BSsh}[mean][][sscpsiup][2]  & \compres{BSsh}[mean][][sscalphadn][2]  & \compres{BSsh}[mean][][sscalphaup][2]  & \compres{BSsh}[mean][][sscepsilondn][2]  & \compres{BSsh}[mean][][sscepsilonup][2]  &  \compres{BSsh}[mean][][sscsigrhoSdn][2]  & \compres{BSsh}[mean][][sscsigrhoSup][2]  & \compres{BSsh}[mean][][piBdn][2]   & \compres{BSsh}[mean][][piBup][2]   & \compres{BSsh}[mean][][nu10][2]   \\
+3. Capital share S & \compres{KSsh}[mean][][sscpsidn][2]  & \compres{KSsh}[mean][][sscpsiup][2]  &  \compres{KSsh}[mean][][sscalphadn][2]  & \compres{KSsh}[mean][][sscalphaup][2]  &  \compres{KSsh}[mean][][sscepsilondn][2]  & \compres{KSsh}[mean][][sscepsilonup][2]  & \compres{KSsh}[mean][][sscsigrhoSdn][2]   & \compres{KSsh}[mean][][sscsigrhoSup][2] &  \compres{KSsh}[mean][][piBdn][2]  & \compres{KSsh}[mean][][piBup][2]  & \compres{KSsh}[mean][][nu10][2] \\
+4. Capital S & \compres{KS}[mean][][sscpsidn][2] & \compres{KS}[mean][][sscpsiup][2]  &  \compres{KS}[mean][][sscalphadn][2]  & \compres{KS}[mean][][sscalphaup][2]  &  \compres{KS}[mean][][sscepsilondn][2]  & \compres{KS}[mean][][sscepsilonup][2]  & \compres{KS}[mean][][sscsigrhoSdn][2]  & \compres{KS}[mean][][sscsigrhoSup][2]  &  \compres{KS}[mean][][piBdn][2]  &  \compres{KS}[mean][][piBup][2]  & \compres{KS}[mean][][nu10][2]  \\
+5. Leverage S & \compres{Slev}[mean][][sscpsidn][2]  & \compres{Slev}[mean][][sscpsiup][2]  & \compres{Slev}[mean][][sscalphadn][2]  & \compres{Slev}[mean][][sscalphaup][2]  & \compres{Slev}[mean][][sscepsilondn][2]  & \compres{Slev}[mean][][sscepsilonup][2]  & \compres{Slev}[mean][][sscsigrhoSdn][2]  & \compres{Slev}[mean][][sscsigrhoSup][2]  &  \compres{Slev}[mean][][piBdn][2]   & \compres{Slev}[mean][][piBup][2]  & \compres{Slev}[mean][][nu10][2]  \\
+6. Leverage C & \compres{Clev}[mean][][sscpsidn][2]  & \compres{Clev}[mean][][sscpsiup][2]  &  \compres{Clev}[mean][][sscalphadn][2]  & \compres{Clev}[mean][][sscalphaup][2]  & \compres{Clev}[mean][][sscepsilondn][2]  & \compres{Clev}[mean][][sscepsilonup][2]  & \compres{Clev}[mean][][sscsigrhoSdn][2]  & \compres{Clev}[mean][][sscsigrhoSup][2]  &  \compres{Clev}[mean][][piBdn][2]   & \compres{Clev}[mean][][piBup][2]  &   \compres{Clev}[mean][][nu10][2]  \\
+7. Early Liquidation (runs) & \compres{lS}[mean][][sscpsidn][2] & \compres{lS}[mean][][sscpsiup][2]  & \compres{lS}[mean][][sscalphadn][2]  & \compres{lS}[mean][][sscalphaup][2]  & \compres{lS}[mean][][sscepsilondn][2]  & \compres{lS}[mean][][sscepsilonup][2]  & \compres{lS}[mean][][sscsigrhoSdn][2]   & \compres{lS}[mean][][sscsigrhoSup][2]  &  \compres{lS}[mean][][piBdn][2]   & \compres{lS}[mean][][piBup][2]  &  \compres{lS}[mean][][nu10][2]\\  \midrule
+& \multicolumn{11}{c}{\textbf{Prices}}              \\  \midrule
+8. Deposit rate S & \compres{rateS}[mean][][sscpsidn][2]   &  \compres{rateS}[mean][][sscpsiup][2]  & \compres{rateS}[mean][][sscalphadn][2]  & \compres{rateS}[mean][][sscalphaup][2]  & \compres{rateS}[mean][][sscepsilondn][2]  & \compres{rateS}[mean][][sscepsilonup][2]  & \compres{rateS}[mean][][sscsigrhoSdn][2]   & \compres{rateS}[mean][][sscsigrhoSup][2]  &  \compres{rateS}[mean][][piBdn][2]  &  \compres{rateS}[mean][][piBup][2]  & \compres{rateS}[mean][][nu10][2]  \\
+9. Deposit rate C &  \compres{rateC}[mean][][sscpsidn][2]  &  \compres{rateC}[mean][][sscpsiup][2]  & \compres{rateC}[mean][][sscalphadn][2]  & \compres{rateC}[mean][][sscalphaup][2]  & \compres{rateC}[mean][][sscepsilondn][2]  & \compres{rateC}[mean][][sscepsilonup][2]  & \compres{rateC}[mean][][sscsigrhoSdn][2]  & \compres{rateC}[mean][][sscsigrhoSup][2] &  \compres{rateC}[mean][][piBdn][2]  &  \compres{rateC}[mean][][piBup][2]  &  \compres{rateC}[mean][][nu10][2]  \\
+10. Convenience Yield S & \compres{MRS_S}[mean][][sscpsidn][2]  &  \compres{MRS_S}[mean][][sscpsiup][2]  & \compres{MRS_S}[mean][][sscalphadn][2]  & \compres{MRS_S}[mean][][sscalphaup][2]  & \compres{MRS_S}[mean][][sscepsilondn][2]  & \compres{MRS_S}[mean][][sscepsilonup][2]  & \compres{MRS_S}[mean][][sscsigrhoSdn][2]  & \compres{MRS_S}[mean][][sscsigrhoSup][2]  &  \compres{MRS_S}[mean][][piBdn][2]  &  \compres{MRS_S}[mean][][piBup][2]  &  \compres{MRS_S}[mean][][nu10][2] \\
+11. Convenience Yield C & \compres{MRS_C}[mean][][sscpsidn][2]  &  \compres{MRS_C}[mean][][sscpsiup][2]  & \compres{MRS_C}[mean][][sscalphadn][2]  & \compres{MRS_C}[mean][][sscalphaup][2]  & \compres{MRS_C}[mean][][sscepsilondn][2]  & \compres{MRS_C}[mean][][sscepsilonup][2]  &  \compres{MRS_C}[mean][][sscsigrhoSdn][2]  & \compres{MRS_C}[mean][][sscsigrhoSup][2]  &  \compres{MRS_C}[mean][][piBdn][2]  &  \compres{MRS_C}[mean][][piBup][2]  &  \compres{MRS_C}[mean][][nu10][2]  \\   
+12. Corr(Conv. Yield C,Y) & \compres{MRS_C}[corrY][][sscpsidn][2] & \compres{MRS_C}[corrY][][sscpsiup][2]  &  \compres{MRS_C}[corrY][][sscalphadn][2]  & \compres{MRS_C}[corrY][][sscalphaup][2]  &  \compres{MRS_C}[corrY][][sscepsilondn][2]  & \compres{MRS_C}[corrY][][sscepsilonup][2]  & \compres{MRS_C}[corrY][][sscsigrhoSdn][2]   & \compres{MRS_C}[corrY][][sscsigrhoSup][2]  & \compres{MRS_C}[corrY][][piBdn][2]   & \compres{MRS_C}[corrY][][piBup][2]  &  \compres{MRS_C}[corrY][][nu10][2] \\ \midrule 
+& \multicolumn{11}{c}{\textbf{Welfare}}            \\  \midrule
+13. Default S & \compres{FS}[mean][][sscpsidn][2]  &  \compres{FS}[mean][][sscpsiup][2]  & \compres{FS}[mean][][sscalphadn][2]  & \compres{FS}[mean][][sscalphaup][2]  & \compres{FS}[mean][][sscepsilondn][2]  & \compres{FS}[mean][][sscepsilonup][2]  & \compres{FS}[mean][][sscsigrhoSdn][2]  & \compres{FS}[mean][][sscsigrhoSup][2]  &  \compres{FS}[mean][][piBdn][2]   & \compres{FS}[mean][][piBup][2]  &  \compres{FS}[mean][][nu10][2] \\
+14. Default C & \compres{FC}[mean][][sscpsidn][2]   &  \compres{FC}[mean][][sscpsiup][2]  &  \compres{FC}[mean][][sscalphadn][2]  &\compres{FC}[mean][][sscalphaup][2]  & \compres{FC}[mean][][sscepsilondn][2]  & \compres{FC}[mean][][sscepsilonup][2]  &  \compres{FC}[mean][][sscsigrhoSdn][2]   & \compres{FC}[mean][][sscsigrhoSup][2]   &  \compres{FC}[mean][][piBdn][2]  & \compres{FC}[mean][][piBup][2]  &  \compres{FC}[mean][][nu10][2] \\
+15. GDP & \compres{GDP}[mean][][sscpsidn][2] & \compres{GDP}[mean][][sscpsiup][2]  & \compres{GDP}[mean][][sscalphadn][2]  & \compres{GDP}[mean][][sscalphaup][2]  & \compres{GDP}[mean][][sscepsilondn][2]  & \compres{GDP}[mean][][sscepsilonup][2]  & \compres{GDP}[mean][][sscsigrhoSdn][2]   & \compres{GDP}[mean][][sscsigrhoSup][2]    &  \compres{GDP}[mean][][piBdn][2]   & \compres{GDP}[mean][][piBup][2]  &   \compres{GDP}[mean][][nu10][2]  \\
+16. Liquidity Services & \compres{H}[mean][][sscpsidn][2]  & \compres{H}[mean][][sscpsiup][2]  & \compres{H}[mean][][sscalphadn][2]  & \compres{H}[mean][][sscalphaup][2]  & \compres{H}[mean][][sscepsilondn][2]  & \compres{H}[mean][][sscepsilonup][2]  &  \compres{H}[mean][][sscsigrhoSdn][2]   & \compres{H}[mean][][sscsigrhoSup][2]   & \compres{H}[mean][][piBdn][2]   & \compres{H}[mean][][piBup][2]   &  \compres{H}[mean][][nu10][2]  \\
+17. Consumption & \compres{C}[mean][][sscpsidn][3]  & \compres{C}[mean][][sscpsiup][3]  & \compres{C}[mean][][sscalphadn][3]  & \compres{C}[mean][][sscalphaup][3]  & \compres{C}[mean][][sscepsilondn][3]  & \compres{C}[mean][][sscepsilonup][3]  & \compres{C}[mean][][sscsigrhoSdn][3]   & \compres{C}[mean][][sscsigrhoSup][3]   &  \compres{C}[mean][][piBdn][3]  & \compres{C}[mean][][piBup][3]   &  \compres{C}[mean][][nu10][3]  \\
+18. Vol(Liquidity Services) & \compres{H}[std][][sscpsidn][2]  & \compres{H}[std][][sscpsiup][2]  & \compres{H}[std][][sscalphadn][2]  & \compres{H}[std][][sscalphaup][2]  & \compres{H}[std][][sscepsilondn][2]  & \compres{H}[std][][sscepsilonup][2]  &  \compres{H}[std][][sscsigrhoSdn][2]   & \compres{H}[std][][sscsigrhoSup][2]  &  \compres{H}[std][][piBdn][2]   & \compres{H}[std][][piBup][2]  &  \compres{H}[std][][nu10][2]  \\
+19. Vol(Consumption) & \compres{C}[std][][sscpsidn][2] & \compres{C}[std][][sscpsiup][2]  &  \compres{C}[std][][sscalphadn][2]  & \compres{C}[std][][sscalphaup][2]  &  \compres{C}[std][][sscepsilondn][2]  & \compres{C}[std][][sscepsilonup][2]  &  \compres{C}[std][][sscsigrhoSdn][2]   & \compres{C}[std][][sscsigrhoSup][2]  &  \compres{C}[std][][piBdn][2]   & \compres{C}[std][][piBup][2]  &  \compres{C}[std][][nu10][2] \\
+%19. Welfare &   & \compres{VHcons}[mean][][sscpsiup][4]\% & \compres{VHcons}[mean][][sscalphadn][4]\% & \compres{VHcons}[mean][][sscalphaup][4]\% & \compres{VHcons}[mean][][sscepsilondn][4]\% & \compres{VHcons}[mean][][sscepsilonup][4]\% & \compres{VHcons}[mean][][piBdn][4]\% & \compres{VHcons}[mean][][piBup][4]\% & \compres{VHcons}[mean][][sscsigrhoSdn][4]\% \\
+			\bottomrule
+				\end{tabular}%
+				\label{tab:ssc}
+			}	
+		%\floatfoot*{This tables presents moments of the simulated model for different single-parameter changes. In columns (1)-(3), we decrease or increase the parameter by 25\%. In Column (4), we de-/increase the volatility of S-banks' idiosyncratic shock by 5\%. In Column (5), we set the bailout probability of S-banks to zero or increase it to 86.5\%. All numbers are percentage changes relative to the baseline. }%Column (6) shows how the equilibrium changes if S-bank liquidity depends on the risk of S-banks. Solving the model with the parameter $\nu=10$ means that S-bank liquidity supply in the liquidity aggregator $H$ is multiplied by $(1-F^S)^{10}$, see text for details. }
+		\end{table}
+	\end{landscape}
+}
+
+\clearpage 
+\newpage
+
+\centering % Center table 
+\begin{table}
+	\captionof{table}{Time-varying S-bank Liquidity Preference Function}% Add 'table' caption		
+	{\footnotesize
+		\begin{tabular}{l|r|r|r}
+			\toprule
+			& (A1) with $\nu=1$ & (A1) with $\nu=10$ & (A2) with $\nu=1$  \\ \midrule
+			& \multicolumn{3}{c}{\textbf{Capital and Debt}}   \\  \midrule
+			1. Capital & \compres{K}[mean][][basenu][2] & \compres{K}[mean][][nu10][2]  & \compres{K}[mean][][fullnu2][2]     \\
+			2. Debt share S & \compres{BSsh}[mean][][basenu][2]  &  \compres{BSsh}[mean][][nu10][2]  & \compres{BSsh}[mean][][fullnu2][2]    \\
+			3. Capital share S & \compres{KSsh}[mean][][basenu][2]  & \compres{KSsh}[mean][][nu10][2]  &  \compres{KSsh}[mean][][fullnu2][2]  \\
+			4. Capital S & \compres{KS}[mean][][basenu][2] & \compres{KS}[mean][][nu10][2]  &  \compres{KS}[mean][][fullnu2][2]  \\
+			5. Leverage S & \compres{Slev}[mean][][basenu][2]  & \compres{Slev}[mean][][nu10][2]  & \compres{Slev}[mean][][fullnu2][2]  \\
+			6. Leverage C & \compres{Clev}[mean][][basenu][2]  & \compres{Clev}[mean][][nu10][2]  &  \compres{Clev}[mean][][fullnu2][2]  \\
+			7. Early Liquidation (runs) & \compres{lS}[mean][][basenu][2] & \compres{lS}[mean][][nu10][2]  & \compres{lS}[mean][][fullnu2][2]  \\  \midrule
+			& \multicolumn{3}{c}{\textbf{Prices}}              \\  \midrule
+			8. Deposit rate S & \compres{rateS}[mean][][basenu][2]   &  \compres{rateS}[mean][][nu10][2]  & \compres{rateS}[mean][][fullnu2][2]   \\
+			9. Deposit rate C &  \compres{rateC}[mean][][basenu][2]  &  \compres{rateC}[mean][][nu10][2]  & \compres{rateC}[mean][][fullnu2][2]  \\
+			10. Convenience Yield S & \compres{MRS_S}[mean][][basenu][2]  &  \compres{MRS_S}[mean][][nu10][2]  & \compres{MRS_S}[mean][][fullnu2][2]  \\
+			11. Convenience Yield C & \compres{MRS_C}[mean][][basenu][2]  &  \compres{MRS_C}[mean][][nu10][2]  & \compres{MRS_C}[mean][][fullnu2][2] \\   
+			12. Corr(Conv. Yield C,Y) & \compres{MRS_C}[corrY][][basenu][2] & \compres{MRS_C}[corrY][][nu10][2]  &  \compres{MRS_C}[corrY][][fullnu2][2]  \\ \midrule 
+			& \multicolumn{3}{c}{\textbf{Welfare}}            \\  \midrule
+			13. Default S & \compres{FS}[mean][][basenu][2]  &  \compres{FS}[mean][][nu10][2]  & \compres{FS}[mean][][fullnu2][2]  \\
+			14. Default C & \compres{FC}[mean][][basenu][2]   &  \compres{FC}[mean][][nu10][2]  &  \compres{FC}[mean][][fullnu2][2]   \\
+			15. GDP & \compres{GDP}[mean][][basenu][2] & \compres{GDP}[mean][][nu10][2]  & \compres{GDP}[mean][][fullnu2][2]   \\
+			16. Liquidity Services & \compres{H}[mean][][basenu][2]  & \compres{H}[mean][][nu10][2]  & \compres{H}[mean][][fullnu2][2]  \\
+			17. Consumption & \compres{C}[mean][][basenu][3]  & \compres{C}[mean][][nu10][3]  & \compres{C}[mean][][fullnu2][3]  \\
+			18. Vol(Liquidity Services) & \compres{H}[std][][basenu][2]  & \compres{H}[std][][nu10][2]  & \compres{H}[std][][fullnu2][2]   \\
+			19. Vol(Consumption) & \compres{C}[std][][basenu][2] & \compres{C}[std][][nu10][2]  &  \compres{C}[std][][fullnu2][2]  \\
+			\bottomrule
+		\end{tabular}%
+		\label{tab:liqfun}
+	}	
+%\floatfoot*{This tables presents moments of the simulated model for different specifications of the utility function for liquidity, see Section \ref{sec:sensitivity} in the main text. All numbers are percentage changes relative to the baseline. Columns 1 and 2 use specification (A1), which means that S-bank liquidity supply in the liquidity aggregator $H$ is multiplied by $(1-F^S)^{\nu}$. The first column sets $\nu=1$, and the second column sets $\nu=10$. The third column instead uses specification (A2) that also incorporates S-bank run risk and bailout probability.}%Column (6) shows how the equilibrium changes if S-bank liquidity depends on the risk of S-banks. Solving the model with the parameter $\nu=10$ means that S-bank liquidity supply in the liquidity aggregator $H$ is multiplied by $(1-F^S)^{10}$, see text for details. }
+\end{table}
+
+
+
+
+
+
+\end{document}
