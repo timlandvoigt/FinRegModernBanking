@@ -8,6 +8,7 @@ classdef LinearInterpFunction < grid.ApproxFunction
         % linear interp specific properties
         Type % scatter or equidistant
         InterpStruct
+        usemex
     end
     
     properties (Constant)
